@@ -1,3 +1,4 @@
+import random
 ###
 # Useful methods of the Dictionary type
 # keys(): Returns each key
@@ -11,11 +12,11 @@
 ###
 
 player = {'name': '', 'health': 0, 'attacks': {'stab': 2, 'slash': 3, 'fall': -1}}
-enemy = {'name': 'Pi Thon', 'health': 0, 'attacks': {'stab': 2, 'slash': 3, 'fall': -1}}
+enemy = {'name': 'Pi Thon', 'health': 50, 'attacks': {'stab': 2, 'slash': 3, 'fall': -1}}
 
 
 def to_object_type(obj, set_to):
-    print("Input Type: " + str(type(obj)))
+    #print("Input Type: " + str(type(obj)))
     if isinstance(obj, int):
         try:
             return int(set_to)
@@ -49,32 +50,40 @@ def set_vars(entity):
                 print("Please enter a different value, you should be entering a: " + str(type(entity[key])))
                 continue
             break
-        print("Output type: " + str(type(entity[key])))
+        #print("Output type: " + str(type(entity[key])))
 
 
 def play_game():
     def attack(attacker, victim, move):
         if move in attacker.get('attacks'):
-            dmg = attacker.get('attacks').get('move')
-            victim['health'] = victim['health'] - dmg
-            print("You dealt " + str(dmg) + " damage to " + victim.get('name'))
+            dmg = attacker.get('attacks').get(move)
+            if dmg >= 0:
+                victim['health'] = victim['health'] - dmg
+                print(attacker['name'] + " dealt " + str(dmg) + " damage to " + victim['name'] + "[" + str(victim['health']) + "]")
+            else:
+                attacker['health'] = attacker['health'] + dmg
+                print(attacker['name'] + "[" + str(attacker['health']) + "]" + " hurt themselves, dealing " + str(dmg) + " damage.")
 
     def list_moves(attacker):
-        print("You can do the following moves: ", end=" ")
+        print("You can do the following moves: ", end="")
         for move in attacker['attacks'].keys():
-            #Attempt to change the output if it is the last move in the list
-            #   if move = attacker['attacks']len(attacker['attacks'].keys())
-            print(str(move) + "(" + str(attacker['attacks'][move]) + " dmg)", end=", ")
+            print(str(move) + "(" + str(attacker['attacks'][move]) + " dmg)", end=" | ")
+        print()
     set_vars(player)
 
+    def pick_attack(entity):
+        return str(random.choice(list(entity['attacks'])))
     while True:
         print(enemy.get('name') + " has " + str(enemy.get('health')) + " health.")
+        print(player.get('name') + " has " + str(player.get('health')) + " health.")
         list_moves(player)
-        input("What would you like to do: ")
-        # ask what attack player wants to do
-        # have the enemy choose a random attack
-        # show your health
-    # depending on who dies, print a different message and restart
+        attack(player, enemy, input("What would you like to do: "))
+        attack(enemy, player, pick_attack(enemy))
+        if player['health'] <= 0:
+            break
+        if enemy['health'] <= 0:
+            break
+    print("Game Over.")
 
 
 while True:
