@@ -10,7 +10,7 @@ debug = True
 
 
 def make_dictionary():
-    file = open('passwords.txt', 'r')
+    file = open('password_file', 'r')
     for line in file:
         account, password = line.split(':')
         passwords[account] = password.strip()
@@ -49,12 +49,12 @@ def set_password(account, password, master_password):
             if debug:
                 print("master password hash: " + base64.b64encode(master_password).decode())
                 print("double hash of master password: " + base64.b64encode(password).decode())
-            file = open('passwords.txt', 'w')
+            file = open('password_file', 'w')
             file.write(account + ':' + base64.b64encode(password).decode())
     else:
         key = SHA256.new((master_password.encode())).digest()
         cipher = AES.new(key, AES.MODE_ECB)
-        file = open('passwords.txt', 'a')
+        file = open('password_file', 'a')
         if debug:
             print(base64.b64encode(cipher.encrypt(password.encode())).decode())
         encoded = base64.b64encode(cipher.encrypt(password.encode())).decode()
