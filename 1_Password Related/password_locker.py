@@ -10,7 +10,7 @@ password_file = 'passwords.txt'
 debug = False
 block_size = 32
 
-
+# Check the readme file if crypto does not want to import
 # The master password is MasterPassword123
 
 
