@@ -8,7 +8,9 @@
 #################################################
 import random
 import logging
-logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
+import inspect
+
+logging.basicConfig(filename='logging_debugging.log', level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 logging.debug('Start of program')
 
 guess = ''
@@ -38,3 +40,42 @@ else:
     else:
         print('Nope. You are really bad at this game.')
 logging.debug('End of program')
+
+#################################################
+# Math
+#################################################
+import math
+
+
+def curline():
+    return inspect.currentframe().f_back.f_lineno
+
+
+logging.debug('Start of Math program')
+for x in range(1, 1000):
+    divide = random.randint(0, 1000)
+    randomNumber = random.randint(0, 300)
+    logging.debug('Divide: ' + str(divide) + ' By: ' + str(randomNumber))
+    try:
+        dividend = math.floor(int(divide) / int(randomNumber))
+    except ZeroDivisionError:
+        logging.critical('Line ' + str(curline()) + ': Error dividing ' + str(divide) + ' by ' + str(randomNumber) + '. Cannot divide by 0.')
+
+#################################################
+# Regex Search the Log
+#################################################
+import re
+
+
+logfile = open('logging_debugging.log')
+
+
+def check_critical(text):
+    critical_format = re.compile('^.+- CRITICAL -.+$')
+    if critical_format.match(text) is not None:
+        print(text)
+
+
+for line in logfile.readlines():
+    check_critical(line)
+
