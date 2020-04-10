@@ -12,7 +12,7 @@ import hashlib
 import argparse
 import csv
 
-import logging
+import logging  # test
 
 log = logging.getLogger('main._pfish')
 
