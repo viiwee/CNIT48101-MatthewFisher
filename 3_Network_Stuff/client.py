@@ -7,7 +7,7 @@ myClientSocket = socket.socket()
 localHost = socket.gethostname()  # Get local host address
 
 
-localPort = 57979  # Port to attempt a connection
+localPort = 5565  # Port to attempt a connection
 
 myClientSocket.connect((localHost, localPort))  # Attempt connection to localHost and localPort
 

@@ -11,7 +11,7 @@ myServerSocket = socket.socket()
 # Get my local host address
 localHost = socket.gethostname()
 # Specify a local Port to accept connections on
-localPort = 57979
+localPort = 5565
 # Bind myServerSocket to localHost and the specified Port
 # Note the bind call requires one parameter, but that
 # parameter is a tuple (notice the parenthesis usage)
