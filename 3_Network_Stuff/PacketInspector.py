@@ -12,7 +12,7 @@ def capturePacket():
 
     # create an INET, raw socket
     s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_IP)  # Create the socket
-    s.bind(("192.168.1.39", 0))  # Bind to the socket
+    s.bind(("192.168.1.43", 0))  # Bind to the socket
     s.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL, 1)
     s.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)  # Receive all packets?
 
